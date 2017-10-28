@@ -11,12 +11,17 @@ using Loja.Repositories.SqlServer.EF;
 using Loja.Mvc.Helpers;
 using Loja.Mvc.Areas.Vendas.Models;
 using log4net;
+using Microsoft.AspNet.SignalR;
+using Loja.Mvc.Hubs;
 
 namespace Loja.Mvc.Areas.Vendas.Controllers
 {
     public class ProdutosController : Controller
     {
         private LojaDbContext _db = new LojaDbContext();
+        private readonly IHubContext _leilaoHub = GlobalHost.ConnectionManager.GetHubContext<LeilaoHub>();
+
+
         //ILog log = log4net.LogManager.GetLogger(typeof(ProdutosController));
         // GET: Produtos
         public ActionResult Index()
@@ -27,8 +32,8 @@ namespace Loja.Mvc.Areas.Vendas.Controllers
             //log.Fatal("Fatal message");
             //ViewBag.Title = "Home Page";
 
-            //return View(Mapeamento.Mapear(_db.Produtos.ToList()));
-            throw new Exception("Teste");
+            return View(Mapeamento.Mapear(_db.Produtos.ToList()));
+            //throw new Exception("Teste");
 
         }
 
@@ -93,7 +98,7 @@ namespace Loja.Mvc.Areas.Vendas.Controllers
         public ActionResult Edit(ProdutoViewModel produtoVM)
         {
             Produto produto;
-            Categoria categoria;
+            //Categoria categoria;
 
             if (ModelState.IsValid)
             {
@@ -106,6 +111,9 @@ namespace Loja.Mvc.Areas.Vendas.Controllers
                 //produto.Categoria = _db.Categorias.Find(produtoVM.CategoriaId);
 
                 _db.SaveChanges();
+
+                _leilaoHub.Clients.All.atualizarOfertas();
+
                 return RedirectToAction("Index");
             }
             return View(produtoVM);

@@ -1,0 +1,19 @@
+namespace Loja.Repositories.SqlServer.EF.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class ProdutoEmLeilao : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.Produto", "EmLeilao", c => 
+                c.Boolean(nullable: false, defaultValue: false));
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.Produto", "EmLeilao");
+        }
+    }
+}

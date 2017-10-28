@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base.cs" />
+    <Compile Include="Carro.cs" />
     <Compile Include="Categoria.cs" />
     <Compile Include="Produto.cs" />
     <Compile Include="ProdutoImagem.cs" />
