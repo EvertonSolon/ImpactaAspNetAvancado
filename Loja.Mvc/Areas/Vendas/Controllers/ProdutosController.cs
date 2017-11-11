@@ -16,6 +16,9 @@ using Loja.Mvc.Hubs;
 
 namespace Loja.Mvc.Areas.Vendas.Controllers
 {
+    using System.Web.Mvc;
+
+    //[Authorize(Roles = "Administrador, Leiloeiro")]
     public class ProdutosController : Controller
     {
         private LojaDbContext _db = new LojaDbContext();

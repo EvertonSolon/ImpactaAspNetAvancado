@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Loja.Dominio
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -20,17 +22,24 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new {Area = ""  }, new { })</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { Area = "" }, new { })</li>
                     <li>@Html.ActionLink("About", "About", "Home", new { Area = "" }, new { })</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { Area = "" }, new { })</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sales<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Products", "Index", "Produtos", new { Area = "Vendas" }, new { })</li>
-                            <li>@Html.ActionLink("Auctions", "Index", "Leiloes", new { Area = "Vendas" }, new { })</li>
+                            
+                            @if (User.IsInRole(Perfil.Comprador.ToString()))
+                            {
+                                <li class="divider" />
+                                <li>@Html.ActionLink("Auctions", "Index", "Leiloes", new { Area = "Vendas" }, new { })</li>
+                            }
                         </ul>
                     </li>
                 </ul>
+                @Html.Partial("_CulturePartial")
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
